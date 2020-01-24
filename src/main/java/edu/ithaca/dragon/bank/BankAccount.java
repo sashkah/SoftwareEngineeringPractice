@@ -31,17 +31,59 @@ public class BankAccount {
      * if amount is negative or larger than balance, should throw an exception and state that the amount is invalid
      */
     public void withdraw (double amount)  {
-        balance -= amount;
+        if(amount > balance || amount < 0) {
+            throw new IllegalArgumentException("Amount is invalid, cannot withdraw.");
+        }
+        else {
+            balance -= amount;
+        }
 
     }
 
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
+        //checks if email contains no '@' or if it contains an underscore, period, or hyphen directly before the '@'
+        if (email.indexOf('@') == -1 || email.charAt(email.indexOf('@')-1) == '-' || email.charAt(email.indexOf('@')-1) == '.'|| email.charAt(email.indexOf('@')-1) == '_') {
             return false;
         }
-        else {
-            return true;
+        //checks if email contains a period followed by a period, underscore, or hyphen
+        if(email.indexOf('.') != -1) {
+            if(email.charAt(email.indexOf('.')+1) == '-' || email.charAt(email.indexOf('.')+1) == '.' || email.charAt(email.indexOf('.')+1) == '_') {
+                return false;
+            }
         }
+        //checks if email contains a hyphen followed by a period, underscore, or hyphen
+        if(email.indexOf('-') != -1) {
+            if(email.charAt(email.indexOf('-')+1) == '-' || email.charAt(email.indexOf('-')+1) == '.' || email.charAt(email.indexOf('-')+1) == '_') {
+                return false;
+            }
+        }
+        //checks if email contains an underscore followed by a period, underscore, or hyphen
+        if(email.indexOf('_') != -1) {
+            if(email.charAt(email.indexOf('_')+1) == '-' || email.charAt(email.indexOf('_')+1) == '.' || email.charAt(email.indexOf('_')+1) == '_') {
+                return false;
+            }
+        }
+        //checks if email begins with a period, underscore, or hyphen
+        if(email.charAt(0) == '.' || email.charAt(0) == '_' || email.charAt(0) == '-') {
+            return false;
+        }
+        //checks if email contains an invalid character
+        if(email.indexOf('!') != -1 || email.indexOf('#') != -1 || email.indexOf('$') != -1 || email.indexOf('%') != -1 || email.indexOf('%') != -1) {
+            return false;
+        }
+        //checks if last portion of domain is missing a period
+        if(email.indexOf('.', email.indexOf('@')) == -1) {
+            return false;
+        }
+        //checks if last portion of domain contains more than one period
+        if(email.charAt(email.indexOf('.',email.indexOf('@'))+1) == '.') {
+            return false;
+        }
+        //checks if last portion of domain is shorter than two characters
+        if(email.substring(email.lastIndexOf('.')+1).length() < 2) {
+            return false;
+        }
+            return true;
     }
 }
