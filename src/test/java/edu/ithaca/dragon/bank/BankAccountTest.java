@@ -35,6 +35,9 @@ class BankAccountTest {
     void isEmailValidTest(){
         //equivalence class - valid email (prefix and suffix valid), not a border case
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
+        //invalid entry, no email
+        assertFalse( BankAccount.isEmailValid(""));
+        assertFalse(BankAccount.isEmailValid("a@@b.com"));
         //equivalence class - invalid email (invalid prefix, valid suffix) - not a border case?
         assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
         //equivalence class - invalid email(invalid prefix, valid suffix) - border case
@@ -43,6 +46,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
         //equivalence class - invalid email(invalid prefix, valid suffix) - border case?
         assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
+        assertFalse(BankAccount.isEmailValid("abc##def@mail.com"));
         //equivalence class - valid email, border case
         assertTrue(BankAccount.isEmailValid("abc-d@mail.com"));
         //equivalence class - valid email, not a border case
@@ -50,7 +54,7 @@ class BankAccountTest {
         //equivalence class - valid email, not a border case
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
         //equivalence class - valid email, not a border case
-        assertTrue(BankAccount.isEmailValid("abc_def@mail.xom"));
+        assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
         //equivalence class - valid email, border case
         assertTrue( BankAccount.isEmailValid("abc.def@mail.cc"));
         //equivalence class - valid email, not a border case
