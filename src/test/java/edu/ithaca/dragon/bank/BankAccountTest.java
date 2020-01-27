@@ -15,21 +15,43 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() {
-        //equivalence class - valid withdrawal, not a border case
+        //valid withdrawal equivalence class - not a border case
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
 
-        //equivalence class - invalid withdrawal (too large), not a border case
+        //valid withdrawal equivalence class - border case
         BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
-        bankAccount2.withdraw(300);
-        assertEquals(200, bankAccount.getBalance());
+        bankAccount2.withdraw(200);
+        assertEquals(0, bankAccount2.getBalance());
 
-        //equivalence class - invalid withdrawal (too small), not a border case
+        //valid withdrawal equivalence class - border case
         BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
-        bankAccount3.withdraw(-100);
-        assertEquals(200, bankAccount.getBalance());
+        bankAccount3.withdraw(199);
+        assertEquals(1, bankAccount3.getBalance());
+
+        //valid withdrawal equivalence class - border case
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 200);
+        bankAccount4.withdraw(0);
+        assertEquals(200, bankAccount4.getBalance());
+
+        //invalid withdrawal, too large equivalence class -  not a border case
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount5.withdraw(300));
+
+        //invalid withdrawal, too large equivalence class - border case
+        BankAccount bankAccount6 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount6.withdraw(201));
+
+        //invalid withdrawal, negative equivalence class -  not a border case
+        BankAccount bankAccount7 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(-100));
+
+        //invalid withdrawal, negative equivalence class -  border case
+        BankAccount bankAccount8 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount8.withdraw(-1));
     }
+
 
     @Test
     void isEmailValidTest(){
