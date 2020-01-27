@@ -52,6 +52,10 @@ public class BankAccount {
                 return false;
             }
         }
+        //checks if email contains two @ symbols in a row
+        if(email.charAt(email.indexOf('@') + 1) == '@') {
+            return false;
+        }
         //checks if email contains a hyphen followed by a period, underscore, or hyphen
         if(email.indexOf('-') != -1) {
             if(email.charAt(email.indexOf('-')+1) == '-' || email.charAt(email.indexOf('-')+1) == '.' || email.charAt(email.indexOf('-')+1) == '_') {
