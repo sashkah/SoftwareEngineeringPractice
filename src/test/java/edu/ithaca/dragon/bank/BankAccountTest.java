@@ -11,10 +11,6 @@ class BankAccountTest {
         //valid equivalence class
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance());
-
-        //invalid equivalence class, negative starting balance
-        BankAccount bankAccount2 = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount2.getBalance());
     }
 
 
@@ -89,9 +85,9 @@ class BankAccountTest {
         //test withdrawl multiple times on one bank account
         BankAccount bankAccount14 = new BankAccount("a@b.com", 200);
         bankAccount14.withdraw(100);
-        assertEquals(100, bankAccount10.getBalance());
+        assertEquals(100, bankAccount14.getBalance());
         bankAccount14.withdraw(49.99);
-        assertEquals(50.01, bankAccount10.getBalance());
+        assertEquals(50.01, bankAccount14.getBalance());
 
     }
 
