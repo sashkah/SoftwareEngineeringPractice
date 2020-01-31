@@ -138,7 +138,13 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is invalid
      */
     public void transfer (double amount, BankAccount startingAcct, BankAccount transferAcct){
-        //TODO
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount is invalid, cannot transfer.");
+        }
+        else {
+            startingAcct.withdraw(amount);
+            transferAcct.deposit(amount);
+        }
     }
 
 }
