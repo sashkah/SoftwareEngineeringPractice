@@ -8,10 +8,16 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
+        //valid equivalence class
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance());
+
+        //invalid equivalence class, negative starting balance
+        BankAccount bankAccount2 = new BankAccount("a@b.com", -200);
+        assertEquals(-200, bankAccount2.getBalance());
     }
+
+
 
     @Test
     void withdrawTest() {
@@ -38,18 +44,22 @@ class BankAccountTest {
         //invalid withdrawal, too large equivalence class -  not a border case
         BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount5.withdraw(300));
+        assertEquals(200, bankAccount5.getBalance());
 
         //invalid withdrawal, too large equivalence class - border case
         BankAccount bankAccount6 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount6.withdraw(201));
+        assertEquals(200, bankAccount6.getBalance());
 
         //invalid withdrawal, negative equivalence class -  not a border case
         BankAccount bankAccount7 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(-100));
+        assertEquals(200, bankAccount7.getBalance());
 
         //invalid withdrawal, negative equivalence class -  border case
         BankAccount bankAccount8 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount8.withdraw(-1));
+        assertEquals(200, bankAccount8.getBalance());
     }
 
 
@@ -95,6 +105,29 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void isAmountValidTest(){
+        //Negative equivalence class, middle case
+        assertFalse(BankAccount.isAmountValid(-100));
+        //Negative equivalence class, border case
+        assertFalse(BankAccount.isAmountValid(-1));
+        //Valid equivalence class, border case
+        assertTrue(BankAccount.isAmountValid(0));
+        //Valid equivalence class, kind of also a border case? Confusing
+        assertTrue(BankAccount.isAmountValid(1));
+        //Valid equivalence class, middle case
+        assertTrue(BankAccount.isAmountValid(100));
+        //Valid equivalence class, border case
+        assertTrue(BankAccount.isAmountValid(0.01));
+        //Valid equivalence class, middle case
+        assertTrue(BankAccount.isAmountValid(1000.90));
+        //Over 2 decimal places equivalence class, border case
+        assertFalse(BankAccount.isAmountValid(0.001));
+        //Over 2 decimal places equivalence class, middle case
+        assertFalse(BankAccount.isAmountValid(100.505));
+        //Both decimal and negative??, border
+        assertFalse(BankAccount.isAmountValid(-0.001));
+    }
 
 
     @Test
