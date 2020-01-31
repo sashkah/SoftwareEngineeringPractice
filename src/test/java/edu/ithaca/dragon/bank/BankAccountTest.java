@@ -227,20 +227,36 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
+        //Valid equivalence class, middle case
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
+        //Invalid email equivalence class
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
-        /*
-        CONFUSED FINISH THIS
-        //Negative starting balance equivalence class, border case
-        BankAccount bankAccount2 = new BankAccount("a@b.com", -1);
-        assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
-         */
+        //Valid equivalence class, border case
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 0.01);
+        assertEquals("a@b.com", bankAccount2.getEmail());
+        assertEquals(0.01, bankAccount2.getBalance());
+
+        //Negative equivalence class, border case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -0.01));
+
+        //Negative equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100.00));
+
+        //More than 2 decimal equivalence class, border case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 0.001));
+
+        //More than 2 decimal equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 0.003456789));
+
+        //More than 2 decimal equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.456));
+
+        //Negative more than 2 decimal test
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -432.00034));
+
     }
 
 }
