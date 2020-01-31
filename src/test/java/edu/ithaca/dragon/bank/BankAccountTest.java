@@ -60,6 +60,39 @@ class BankAccountTest {
         BankAccount bankAccount8 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount8.withdraw(-1));
         assertEquals(200, bankAccount8.getBalance());
+
+        //valid decimal withdrawal equivalence class - not a border case
+        BankAccount bankAccount9 = new BankAccount("a@b.com", 200);
+        bankAccount9.withdraw(100.00);
+        assertEquals(100, bankAccount9.getBalance());
+
+        //valid decimal withdrawal equivalence class - border case
+        BankAccount bankAccount10 = new BankAccount("a@b.com", 200);
+        bankAccount10.withdraw(0.01);
+        assertEquals(199.99, bankAccount10.getBalance());
+
+        //invalid withdrawal, more than 2 decimal equivalence class -  not a border case
+        BankAccount bankAccount11 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount11.withdraw(100.005));
+        assertEquals(200, bankAccount11.getBalance());
+
+        //invalid withdrawal, more than 2 decimal equivalence class -  border case
+        BankAccount bankAccount12 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount12.withdraw(0.001));
+        assertEquals(200, bankAccount12.getBalance());
+
+        //invalid withdrawal, negative more than 2 decimal equivalence class -  not a border case
+        BankAccount bankAccount13 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount13.withdraw(-100.005));
+        assertEquals(200, bankAccount13.getBalance());
+
+        //test withdrawl multiple times on one bank account
+        BankAccount bankAccount14 = new BankAccount("a@b.com", 200);
+        bankAccount14.withdraw(100);
+        assertEquals(100, bankAccount10.getBalance());
+        bankAccount14.withdraw(49.99);
+        assertEquals(50.01, bankAccount10.getBalance());
+
     }
 
 
@@ -133,11 +166,20 @@ class BankAccountTest {
     @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        /*
+        CONFUSED FINISH THIS
+        //Negative starting balance equivalence class, border case
+        BankAccount bankAccount2 = new BankAccount("a@b.com", -1);
+        assertEquals(200, bankAccount.getBalance());
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+         */
     }
 
 }
+
