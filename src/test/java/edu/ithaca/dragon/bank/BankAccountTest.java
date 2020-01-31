@@ -79,7 +79,7 @@ class BankAccountTest {
 
         //invalid withdrawal, negative more than 2 decimal equivalence class -  not a border case
         BankAccount bankAccount13 = new BankAccount("a@b.com", 200);
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount13.withdraw(-100.005));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount13.withdraw(-100.005435));
         assertEquals(200, bankAccount13.getBalance());
 
         //test withdrawl multiple times on one bank account
@@ -115,13 +115,48 @@ class BankAccountTest {
         assertEquals(300.50, bankAccount.getBalance());
 
         //More than 2 decimal places equivalence class, middle case
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(400.505));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(400.5055));
         assertEquals(300.50, bankAccount.getBalance());
 
         //Negative and more than 2 decimal places test
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-40.005));
         assertEquals(300.50, bankAccount.getBalance());
+
     }
+
+    @Test
+    void transferTest(){
+        //Valid equivalence class, middle case
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 0);
+        bankAccount.transfer(100, bankAccount, bankAccount2);
+        assertEquals(100, bankAccount.getBalance());
+        assertEquals(100, bankAccount2.getBalance());
+
+        //Valid equivalence class, border case
+        bankAccount.transfer(0.01, bankAccount, bankAccount2);
+        assertEquals(99.99, bankAccount.getBalance());
+        assertEquals(100.01, bankAccount2.getBalance());
+
+        //Negative equivalence class, border case
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 0);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.transfer(-0.01, bankAccount3, bankAccount4));
+
+        //Negative equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.transfer(-100.05, bankAccount3, bankAccount4));
+
+        //More than 2 decimal equivalence class equivalence class, border case
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount6 = new BankAccount("a@b.com", 0);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount5.transfer(0.001, bankAccount5, bankAccount6));
+
+        //More than 2 decimal equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount5.transfer(100.00004, bankAccount5, bankAccount6));
+
+
+    }
+
 
     @Test
     void isEmailValidTest(){

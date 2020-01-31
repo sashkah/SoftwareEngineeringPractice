@@ -121,8 +121,24 @@ public class BankAccount {
      * if amount is negative or invalid (decimals), should throw an exception and state that the amount is invalid
      */
     public void deposit (double amount)  {
-        //TODO
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount is invalid, cannot withdraw.");
+        }
+        else {
+            balance += amount;
+        }
 
+    }
+
+    /**
+     * @param amount
+     * @param startingAcct
+     * @param transferAcct
+     * If amount is valid, withdraws amount from startingAcct and deposits it in transferAcct
+     * @throws IllegalArgumentException if amount is invalid
+     */
+    public void transfer (double amount, BankAccount startingAcct, BankAccount transferAcct){
+        //TODO
     }
 
 }
