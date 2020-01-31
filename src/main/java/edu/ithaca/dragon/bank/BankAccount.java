@@ -115,4 +115,14 @@ public class BankAccount {
         else {return true;}
     }
 
+
+    /**
+     * @post increases the balance by amount if amount is non-negative
+     * if amount is negative or invalid (decimals), should throw an exception and state that the amount is invalid
+     */
+    public void deposit (double amount)  {
+        //TODO
+
+    }
+
 }

@@ -91,6 +91,37 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void depositTest(){
+        //Valid equivalence class, border case
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(0.01);
+        assertEquals(200.01, bankAccount.getBalance());
+
+        //Valid equivalence class, middle case
+        bankAccount.deposit(100.49);
+        assertEquals(300.50, bankAccount.getBalance());
+
+        //Negative equivalence class, border case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-0.01));
+        assertEquals(300.50, bankAccount.getBalance());
+
+        //Negative equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-500));
+        assertEquals(300.50, bankAccount.getBalance());
+
+        //More than 2 decimal places equivalence class, border case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(0.001));
+        assertEquals(300.50, bankAccount.getBalance());
+
+        //More than 2 decimal places equivalence class, middle case
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(400.505));
+        assertEquals(300.50, bankAccount.getBalance());
+
+        //Negative and more than 2 decimal places test
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-40.005));
+        assertEquals(300.50, bankAccount.getBalance());
+    }
 
     @Test
     void isEmailValidTest(){
