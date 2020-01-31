@@ -1,4 +1,5 @@
 package edu.ithaca.dragon.bank;
+import java.lang.Math;
 
 public class BankAccount {
 
@@ -97,7 +98,14 @@ public class BankAccount {
      * and has two decimal points or less, and false otherwise.
      */
    public static boolean isAmountValid(double amount){
-        return false;
+       double rounded = Math.round(amount *100.0)/100.0;
+        if (amount < 0){
+            return false;
+        }
+        else if (rounded != amount){
+            return false;
+       }
+        else {return true;}
     }
 
 }
